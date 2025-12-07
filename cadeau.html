@@ -15,19 +15,20 @@
       overflow:hidden;
     }
 
-    /* CARTE FULLSCREEN */
     .card{
       width:100vw;height:100vh;
-      padding:6vh 6vw;
+      padding:4vh 6vw;
       background:radial-gradient(circle at top left,#333 0%,#050505 35%,#000 80%);
       color:#fff;
-      display:flex;flex-direction:column;
+      display:flex;
+      flex-direction:column;
       justify-content:space-between;
-      animation:float 4.2s ease-in-out infinite;
-      position:relative;overflow:hidden;
+      position:relative;
+      animation:float 4s ease-in-out infinite;
+      overflow:hidden;
     }
 
-    /* Halo */
+    /* Effets lumineux */
     .card::before{
       content:"";
       position:absolute;
@@ -39,7 +40,6 @@
       animation:shine 8s infinite linear;
     }
 
-    /* Ligne brillante */
     .card::after{
       content:"";
       position:absolute;
@@ -49,41 +49,46 @@
       animation:sweep 6s infinite linear;
     }
 
-    /* TOP ROW */
-    .row-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      z-index:10;
-    }
-
+    /* LOGO ZARA EN HAUT CENTRÉ */
     .brand{
       font-size:8vw;
       letter-spacing:1.2vw;
       text-transform:uppercase;
       font-weight:300;
+      text-align:center;
+      margin-top:3vh;
+      z-index:10;
     }
 
-    /* ---- ZONE DU MONTANT CENTRÉE ---- */
+    /* ----- MONTANT CENTRÉ AU MILIEU DE L'ÉCRAN ----- */
+    .amount-center{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+      z-index:10;
+    }
+
     .amount-wrapper{
       position:relative;
       display:flex;
       justify-content:center;
       align-items:center;
-      height:12vh;
-      min-width:26vw;
+      height:14vh;
+      min-width:40vw;
     }
 
     .amount-real{
-      font-size:10vw;
+      font-size:12vw;
       font-weight:700;
-      z-index:3;
-      padding:8px 18px;
+      padding:10px 22px;
       border-radius:12px;
       background:linear-gradient(135deg,#ffd678,#e8b144,#ffcf5e);
       color:#000;
       text-shadow:0 2px 6px rgba(0,0,0,0.25);
       position:relative;
+      z-index:3;
     }
 
     #scratchCanvas{
@@ -94,52 +99,28 @@
       z-index:6;
     }
 
-    /* Numéro */
-    .number{
+    /* Infos bas */
+    .bottom-info{
       text-align:center;
-      font-size:5vw;
-      letter-spacing:1vw;
-      margin:4vh 0;
+      margin-bottom:3vh;
       z-index:10;
     }
 
-    /* Bas de carte */
-    .bottom{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      font-size:4.5vw;
-      z-index:10;
+    .number{
+      font-size:5vw;letter-spacing:1vw;margin-bottom:2vh;
+    }
+
+    .bottom-line{
+      display:flex;justify-content:center;gap:12vw;
+      font-size:4vw;
     }
 
     .label{
-      font-size:3vw;
-      text-transform:uppercase;
-      opacity:.6;
-      letter-spacing:.4vw;
+      font-size:3vw;text-transform:uppercase;opacity:.6;
     }
 
     .value{
       font-size:4.5vw;margin-top:1vw;
-    }
-
-    .logo-small{
-      font-size:4vw;
-      opacity:.8;
-      text-transform:uppercase;
-      letter-spacing:.6vw;
-    }
-
-    /* Bouton retour */
-    .back-btn{
-      position:absolute;
-      bottom:3vh;left:50%;transform:translateX(-50%);
-      padding:12px 28px;
-      background:#fff;color:#000;
-      border-radius:999px;text-decoration:none;
-      font-size:4vw;font-weight:600;
-      box-shadow:0 0 20px rgba(255,255,255,0.4);
-      z-index:20;
     }
 
     /* Animations */
@@ -160,44 +141,42 @@
       40%{opacity:.7;}
       100%{transform:translateX(80%);opacity:0;}
     }
-
   </style>
-</head>
 
+</head>
 <body>
 
   <div class="card">
 
-    <div class="row-top">
-      <div class="brand">ZARA</div>
+    <!-- LOGO ZARA CENTRÉ -->
+    <div class="brand">ZARA</div>
 
-      <!-- Zone grattable CENTRÉE -->
+    <!-- MONTANT AU CENTRE EXACT -->
+    <div class="amount-center">
       <div class="amount-wrapper" id="scratchZone">
         <div class="amount-real">100€</div>
         <canvas id="scratchCanvas"></canvas>
       </div>
     </div>
 
-    <div class="number">XXXX XXXX XXXX XXXX</div>
+    <!-- INFOS EN BAS -->
+    <div class="bottom-info">
+      <div class="number">XXXX XXXX XXXX XXXX</div>
 
-    <div class="bottom">
-      <div>
-        <div class="label">CVV</div>
-        <div class="value">YYY</div>
+      <div class="bottom-line">
+        <div>
+          <div class="label">CVV</div>
+          <div class="value">YYY</div>
+        </div>
+
+        <div>
+          <div class="label">Exp.</div>
+          <div class="value">MM/AAAA</div>
+        </div>
       </div>
-
-      <div>
-        <div class="label">Expiration</div>
-        <div class="value">MM/AAAA</div>
-      </div>
-
-      <div class="logo-small">ZARA</div>
     </div>
 
-    <a href="index.html" class="back-btn">⬅ Retour</a>
-
   </div>
-
 
 <script>
 /* --- EFFET DE GRATTER --- */
@@ -233,7 +212,7 @@ function scratch(e) {
 
   ctx.globalCompositeOperation = "destination-out";
   ctx.beginPath();
-  ctx.arc(x, y, 28, 0, Math.PI * 2);
+  ctx.arc(x, y, 30, 0, Math.PI * 2);
   ctx.fill();
 }
 
