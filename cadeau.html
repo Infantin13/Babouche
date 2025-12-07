@@ -121,6 +121,19 @@ body{
   transform:scale(0.6);
 }
 
+/* Texte "Gratte ici" */
+#scratch-text{
+  position:absolute;
+  z-index:7;
+  color:#fff;
+  font-size:5vw;
+  font-weight:600;
+  text-shadow:0 0 12px rgba(255,255,255,0.9);
+  opacity:0.85;
+  pointer-events:none;
+  user-select:none;
+}
+
 /* BLING montant */
 @keyframes bling {
   0% {transform:scale(0.6); filter:brightness(0.5);}
@@ -217,22 +230,25 @@ body{
       <div class="sparkle"></div>
       <div class="sparkle"></div>
 
+      <!-- Texte dans la zone à gratter -->
+      <div id="scratch-text">Gratte ici</div>
+
       <canvas id="scratchCanvas"></canvas>
     </div>
   </div>
 
   <div class="bottom-info">
-    <div class="number">9110 2501 4244 1364</div>
+    <div class="number">XXXX XXXX XXXX XXXX</div>
 
     <div class="bottom-line">
       <div>
         <div class="label">CVV</div>
-        <div class="value">804</div>
+        <div class="value">YYY</div>
       </div>
 
       <div>
         <div class="label">Exp.</div>
-        <div class="value">03/12/2028</div>
+        <div class="value">MM/AAAA</div>
       </div>
     </div>
   </div>
@@ -244,6 +260,7 @@ body{
 const canvas = document.getElementById("scratchCanvas");
 const zone = document.getElementById("scratchZone");
 const ctx = canvas.getContext("2d");
+const scratchText = document.getElementById("scratch-text");
 
 function resizeCanvas() {
   canvas.width = zone.offsetWidth;
@@ -263,6 +280,12 @@ canvas.addEventListener("touchend", () => scratching = false);
 
 function scratch(e) {
   if (!scratching) return;
+
+  // On cache "Gratte ici" dès le premier grattage
+  if (scratchText.style.opacity !== "0") {
+    scratchText.style.opacity = "0";
+  }
+
   let rect = canvas.getBoundingClientRect();
   let x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
   let y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
