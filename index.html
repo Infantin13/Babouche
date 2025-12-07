@@ -13,10 +13,9 @@
     body {
       background: #ff2b8a;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      overflow: hidden; /* empêche le scroll si image dépasse */
+      overflow: hidden;
     }
 
-    /* Conteneur plein écran */
     .scene {
       position: relative;
       width: 100vw;
@@ -24,45 +23,49 @@
       overflow: hidden;
     }
 
-    /* GIF plein écran */
     .scene img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* garde les proportions sans déformation */
+      object-fit: contain;
       display: block;
     }
 
-    /* Bouton */
+    /* --- BOUTON PLUS GROS ---- */
     .cta {
       position: absolute;
       left: 50%;
       bottom: 6%;
       transform: translateX(-50%);
-      padding: 14px 22px;
+      
+      padding: 20px 32px;       /* Taille augmentée */
+      font-size: 1.35rem;       /* Texte plus grand */
+      
       background: rgba(0, 0, 0, 0.85);
       color: #fff;
       border-radius: 999px;
-      font-size: 1.1rem;
       border: none;
       cursor: pointer;
+
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.4s ease;
+
       display: flex;
-      gap: 8px;
+      gap: 12px;                /* Espace entre emoji et texte */
       align-items: center;
+
       z-index: 10;
     }
 
     .cta.show {
       opacity: 1;
       pointer-events: auto;
-      animation: pulse 1.4s infinite;
+      animation: pulse 1.3s infinite;
     }
 
     @keyframes pulse {
       0%   { transform: translateX(-50%) scale(1); }
-      50%  { transform: translateX(-50%) scale(1.07); }
+      50%  { transform: translateX(-50%) scale(1.09); } /* un peu plus fort */
       100% { transform: translateX(-50%) scale(1); }
     }
   </style>
@@ -70,23 +73,21 @@
 <body>
 
   <div class="scene">
-    <!-- Ton GIF en plein écran -->
     <img src="chat.gif" alt="Chat qui ouvre un cadeau" />
 
-    <!-- Bouton retardé -->
     <button class="cta" id="ctaButton">
-      🐱 Aide-moi à ouvrir le cadeau
+      🎁 Aide-moi à ouvrir le cadeau
     </button>
   </div>
 
   <script>
-    // Affiche le bouton après 5 secondes
+    // Apparition du bouton après 5 secondes
     setTimeout(function () {
       const btn = document.getElementById('ctaButton');
       if (btn) btn.classList.add('show');
     }, 5000);
 
-    // Quand on clique -> ouverture du lien ou de cadeau.html
+    // Redirection
     document.getElementById('ctaButton').addEventListener('click', function () {
       window.location.href = "cadeau.html"; 
       // ou TON LIEN direct
