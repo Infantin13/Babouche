@@ -183,7 +183,17 @@ body{
 }
 
 /* Infos en bas */
-.bottom-info{text-align:center;margin-bottom:3vh;}
+.bottom-info{
+  text-align:center;
+  margin-bottom:3vh;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.bottom-info.show{
+  opacity:1;
+  transform:translateY(0);
+}
 .number{
   font-size:5vw;letter-spacing:1vw;margin-bottom:2vh;
 }
@@ -325,10 +335,11 @@ function checkReveal() {
 }
 checkReveal();
 
-/* BLING montant + Joyeux Noël + ZARA */
+/* BLING montant + Joyeux Noël + ZARA + infos bas */
 function revealAmount() {
   const amount = document.getElementById("amountReal");
   const noel   = document.getElementById("noel-message");
+  const bottom = document.querySelector(".bottom-info");
 
   canvas.style.opacity = "0";
   setTimeout(() => canvas.remove(), 350);
@@ -343,10 +354,16 @@ function revealAmount() {
   brand.style.opacity = "1";
   brand.style.transform = "scale(1)";
 
+  // Joyeux Noël
   setTimeout(() => {
     noel.style.opacity = "1";
     noel.style.transform = "translateY(0)";
   }, 900);
+
+  // Infos carte (numéro / CVV / Exp) en dernier
+  setTimeout(() => {
+    if (bottom) bottom.classList.add("show");
+  }, 1200);
 }
 </script>
 
