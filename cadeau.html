@@ -74,6 +74,11 @@ body{
   text-align:center;
   margin-top:3vh;
   z-index:10;
+
+  /* caché au début, on l'affiche après grattage */
+  opacity:0;
+  transform:scale(0.7);
+  transition:opacity 0.7s ease, transform 0.7s ease;
 }
 
 /* JOYEUX NOËL – CENTRÉ AU-DESSUS DU MONTANT */
@@ -264,6 +269,7 @@ const canvas = document.getElementById("scratchCanvas");
 const zone = document.getElementById("scratchZone");
 const ctx = canvas.getContext("2d");
 const scratchText = document.getElementById("scratch-text");
+const brand = document.querySelector(".brand");
 
 function resizeCanvas() {
   canvas.width = zone.offsetWidth;
@@ -319,7 +325,7 @@ function checkReveal() {
 }
 checkReveal();
 
-/* BLING montant + Joyeux Noël aligné */
+/* BLING montant + Joyeux Noël + ZARA */
 function revealAmount() {
   const amount = document.getElementById("amountReal");
   const noel   = document.getElementById("noel-message");
@@ -332,6 +338,10 @@ function revealAmount() {
 
   const sparkles = document.querySelectorAll(".sparkle");
   sparkles.forEach(s => s.style.opacity = "1");
+
+  // ZARA apparaît après grattage
+  brand.style.opacity = "1";
+  brand.style.transform = "scale(1)";
 
   setTimeout(() => {
     noel.style.opacity = "1";
